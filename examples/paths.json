@@ -1,0 +1,22 @@
+{
+    "MIND": {
+        "behaviours": "examples/MIND/behaviors_small.tsv",
+        "articles": "examples/MIND/articles_large_narrow.json",
+        "predictions": {
+            "pop": "examples/MIND/recommendations/pop_pred_small.json",
+            "lstur": "examples/MIND/recommendations/lstur_pred_small.json",
+            "naml": "examples/MIND/recommendations/naml_pred_small.json",
+            "npa": "examples/MIND/recommendations/npa_pred_small.json",
+            "nrms": "examples/MIND/recommendations/nrms_pred_small.json"
+        }
+    },
+    "Globo": {
+        "behaviours": "examples/Globo/behaviors_medium.parquet",
+        "articles": "examples/Globo/articles_without_body_small.parquet",
+        "predictions": {
+            "als": "examples/Globo/recommendations/als_pred_small.parquet",
+            "recents": "examples/Globo/recommendations/recents_pred_small.parquet",
+            "top24h": "examples/Globo/recommendations/top24h_pred_small.parquet"
+        }
+    }
+}

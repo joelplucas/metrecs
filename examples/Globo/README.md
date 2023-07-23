@@ -49,3 +49,6 @@ Despite combining multiple algorithms in the same impression, there is always a 
 ## License
 
 TBD / TODO
+
+- Get longer size_list (> 10)
+- 

@@ -44,11 +44,12 @@ def get_top_rec_ids_array(
     pred_df: pd.DataFrame, behaviors_presel_df: pd.DataFrame, top_k: int
 ) -> pd.DataFrame:
     # Create a df with one row per user that contains only the top_k recommendations, that is the newsid and not the position of the preselection
-
-    pred_df = pred_df[pred_df["size_list"] >= top_k]
+    max_size_list = pred_df["size_list"].max()
+    pred_df = pred_df[pred_df["size_list"] >= min(top_k, max_size_list)]
     pred_preselection_df = pred_df.merge(
         behaviors_presel_df[["index", "user", "pool_array"]], on="index"
     )
+
     pred_preselection_df["pred_slice_id"] = pred_preselection_df.apply(
         (
             lambda x: [
@@ -85,7 +86,7 @@ def get_cat(
     cat_column: str,
     top_at: int,
     slice_col: bool = False,
-    size_cat_list: int = 2,
+    size_cat_list: int = 4,
 ) -> pd.DataFrame:
     s = pd.DataFrame(
         {column: np.concatenate(df[column].values)},
@@ -128,5 +129,8 @@ def get_cat(
             lambda row: list(row["sorted_newsid_list"])[0:top_at], axis=1
         )
         df_cat["size_cat_list"] = df_cat["sorted_cat_list"].apply(len)
+
+        size_cat_list = min(df_cat["size_cat_list"].max(), size_cat_list)
+
         df_cat = df_cat[df_cat["size_cat_list"] >= size_cat_list]
     return df_cat

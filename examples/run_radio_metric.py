@@ -219,7 +219,7 @@ def main(
     _, pred_preselection_df = dataset.read_predictions(
         path_predictions, behaviors_presel_df, top_k=top_at, algo=algo
     )
-    # pred_preselection_df = pred_preselection_df.sample(2000)
+    pred_preselection_df = pred_preselection_df.sample(2000)
 
     df_calibration, df_representation, df_fragmentation = calculate_metrics(
         articles_df,
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--algo", default="pop")
     parser.add_argument("-d", "--dataset", default="MIND")
-    parser.add_argument("-t", "--top_at", default="6,7,8")
+    parser.add_argument("-t", "--top_at", default="9,10,11")
     args = parser.parse_args()
 
     ALGO = args.algo
@@ -284,20 +284,21 @@ if __name__ == "__main__":
 
         logger = logging.getLogger(f"{ALGO}@{TOP_AT}-logger")
         print(f"Running metrics on {ALGO} for top at {TOP_AT}")
-        try:
-            main(
-                path_behaviours=PATH_BEHAVIOURS,
-                path_articles=PATH_ARTICLES,
-                path_predictions=PATH_PREDICTIONS,
-                path_results=PATH_RESULTS,
-                algo=ALGO,
-                top_at=TOP_AT,
-            )
-        except Exception as e:
-            message = "Error running experiment:" + str(e)
-            print(message)
-            # raise ValueError(message)
-            logger.error(message)
+        # try:
+        main(
+            path_behaviours=PATH_BEHAVIOURS,
+            path_articles=PATH_ARTICLES,
+            path_predictions=PATH_PREDICTIONS,
+            path_results=PATH_RESULTS,
+            algo=ALGO,
+            top_at=TOP_AT,
+        )
+        # except Exception as e:
+        #     message = "Error running experiment:" + str(e)
+        #     print(message)
+        #     # raise ValueError(message)
+        #     logger.error(message)
 
 
 # python examples/run_radio_metric.py --dataset=Globo --algo=top24h
+# python examples/run_radio_metric.py --dataset=MIND --algo=pop --top_at=5
